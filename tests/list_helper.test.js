@@ -151,13 +151,13 @@ describe('favoriteBlog', () => {
   ]
 
   test('when list is empty, equals null', () => {
-    const result = listHelper.favorite([])
+    const result = listHelper.favoriteBlog([])
 
     expect(result).toBe(null)
   })
 
   test('when list has only one blog, equals that blog', () => {
-    const result = listHelper.favorite(listWithOneBlog)
+    const result = listHelper.favoriteBlog(listWithOneBlog)
 
     expect(result.title).toEqual("Go To Statement Considered Harmful")
     expect(result.author).toEqual("Edsger W. Dijkstra")
@@ -165,7 +165,7 @@ describe('favoriteBlog', () => {
   })
   
   test('when list contains many blogs, equals blog with highest likes', () => {
-    const result = listHelper.favorite(blogs)
+    const result = listHelper.favoriteBlog(blogs)
 
     expect(result.title).toEqual("Canonical string reduction")
     expect(result.author).toEqual("Edsger W. Dijkstra")
