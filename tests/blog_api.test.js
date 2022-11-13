@@ -60,6 +60,36 @@ test('a valid blog added with no likes property sets likes to 0 by default', asy
   expect(blogsAtEnd[blogsAtEnd.length - 1].likes).toEqual(0)
 })
 
+test('a blog with no title is invalid', async () => {
+  const newBlog = {
+    author: "Test",
+    url: "http://www.test.com",
+    likes: 2,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
+test('a blog with no url is invalid', async () => {
+  const newBlog = {
+    title: "A Test Blog",
+    author: "Test",
+    likes: 2,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
