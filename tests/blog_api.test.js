@@ -107,6 +107,23 @@ test('a note is deleted if id is valid', async () => {
   expect(titles).not.toContain(blogToDelete.title)
 })
 
+test('a blog is updated with PUT', async () => {
+  const blogs = await helper.blogsInDb()
+  const blogToUpdate = blogs[0]
+  const likes = blogToUpdate.likes
+  blogToUpdate.likes = blogToUpdate.likes + 1
+
+  console.log(blogToUpdate)
+
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(blogToUpdate)
+    .expect(200)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd[0].likes).toEqual(likes + 1)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
