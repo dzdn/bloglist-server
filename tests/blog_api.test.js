@@ -45,6 +45,21 @@ test('a valid blog can be added', async () => {
     expect(titles).toContain("A Test Blog")
 })
 
+test('a valid blog added with no likes property sets likes to 0 by default', async () => {
+  const newBlog = {
+    title: "A Test Blog",
+    author: "Test",
+    url: "http://www.test.com",
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+  
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd[blogsAtEnd.length - 1].likes).toEqual(0)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
